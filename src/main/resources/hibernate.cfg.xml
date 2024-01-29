@@ -16,5 +16,16 @@
         <property name="hbm2ddl.auto">update</property>
 
         <mapping class="com.lab2.entities.Doctor"/>
+        <mapping class="com.lab2.entities.Specialization"/>
+        <mapping class="com.lab2.entities.Appointment"/>
+        <mapping class="com.lab2.entities.Visit"/>
+        <mapping class="com.lab2.entities.Patient"/>
+        <mapping class="com.lab2.entities.Medication"/>
+        <mapping class="com.lab2.entities.PrescribedMedication"/>
+        <mapping class="com.lab2.entities.Procedure"/>
+        <mapping class="com.lab2.entities.PrescribedProcedure"/>
+        <mapping class="com.lab2.entities.Test"/>
+        <mapping class="com.lab2.entities.TestResult"/>
+        <mapping class="com.lab2.entities.Diagnosis"/>
     </session-factory>
 </hibernate-configuration>
