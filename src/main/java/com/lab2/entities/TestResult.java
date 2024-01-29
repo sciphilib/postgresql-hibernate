@@ -9,27 +9,24 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "doctors")
+@Table(name = "test_results")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Doctor {
+public class TestResult {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "id_visit")
+    private Integer idVisit;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "id_test")
+    private Integer idTest;
 
-    @Column(name = "middle_name")
-    private String middleName;
-
-    @Column(name = "id_spec")
-    private Integer idSpec;
+    @Column(name = "result")
+    private String result;
 }

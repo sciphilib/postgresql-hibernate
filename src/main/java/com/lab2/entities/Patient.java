@@ -9,13 +9,13 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "doctors")
+@Table(name = "patients")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Doctor {
+public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +30,6 @@ public class Doctor {
     @Column(name = "middle_name")
     private String middleName;
 
-    @Column(name = "id_spec")
-    private Integer idSpec;
+    @Column(name = "address")
+    private String address;
 }

@@ -9,27 +9,18 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "doctors")
+@Table(name = "tests")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Doctor {
+public class Test {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "middle_name")
-    private String middleName;
-
-    @Column(name = "id_spec")
-    private Integer idSpec;
+    @Column(name = "name")
+    private String name;
 }
