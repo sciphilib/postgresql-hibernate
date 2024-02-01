@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.SpecializationViewController" spacing="10">
+
+    <TableView fx:id="specializationTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="index" text="ID" />
+            <TableColumn fx:id="name" text="Specialization" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Add Specialization" fx:id="addSpecializationButton" onAction="#addSpecialization"/>
+        <Button text="Edit Specialization" fx:id="editSpecializationButton" onAction="#editSpecialization"/>
+        <Button text="Delete Specialization" fx:id="deleteSpecializationButton" onAction="#deleteSpecialization"/>
+    </HBox>
+
+</VBox>

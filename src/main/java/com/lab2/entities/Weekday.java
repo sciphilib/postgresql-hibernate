@@ -9,24 +9,18 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "prescribed_procedures")
+@Table(name = "weekdays")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class PrescribedProcedure {
+public class Weekday {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "id_visit")
-    private Integer idVisit;
-
-    @Column(name = "id_procedure")
-    private Integer idProcedure;
-
-    @Column(name = "count")
-    private Integer count;
+    @Column(name = "name")
+    private String name;
 }
