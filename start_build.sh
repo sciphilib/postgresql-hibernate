@@ -1,2 +1,2 @@
-path=$(mvn clean package | grep 'Building jar' | awk '{printf $4}')
-java -jar $path
+mvn clean package
+mvn javafx:run

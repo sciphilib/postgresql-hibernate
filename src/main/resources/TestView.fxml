@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.TestViewController" spacing="10">
+
+    <TableView fx:id="testTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="index" text="ID" />
+            <TableColumn fx:id="name" text="Test" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Add Test" fx:id="addTestButton" onAction="#addTest"/>
+        <Button text="Edit Test" fx:id="editTestButton" onAction="#editTest"/>
+        <Button text="Delete Test" fx:id="deleteTestButton" onAction="#deleteTest"/>
+    </HBox>
+
+</VBox>

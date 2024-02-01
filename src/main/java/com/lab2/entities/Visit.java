@@ -5,7 +5,7 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
@@ -32,11 +32,11 @@ public class Visit {
     private String complaints;
 
     @Column(name = "date_visit")
-    private LocalTime date_visit;
+    private LocalDateTime dateVisit;
 
     @Column(name = "date_discharge")
-    private LocalTime date_discharge;
+    private LocalDateTime dateDischarge;
 
     @Column(name = "date_close")
-    private LocalTime date_close;
+    private LocalDateTime dateClose;
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.AppointmentViewController" spacing="10">
+
+    <TableView fx:id="appointmentTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="index" text="ID" />
+            <TableColumn fx:id="doctor" text="Doctor" />
+	    <TableColumn fx:id="weekday" text="Weekday" />
+	    <TableColumn fx:id="beginDate" text="Begin Time" />
+	    <TableColumn fx:id="endDate" text="End Time" />
+	    <TableColumn fx:id="office" text="Office" />
+	    <TableColumn fx:id="district" text="District" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Add Appointment" fx:id="addAppointmentButton" onAction="#addAppointment"/>
+        <Button text="Edit Appointment" fx:id="editAppointmentButton" onAction="#editAppointment"/>
+        <Button text="Delete Appointment" fx:id="deleteAppointmentButton" onAction="#deleteAppointment"/>
+    </HBox>
+
+</VBox>

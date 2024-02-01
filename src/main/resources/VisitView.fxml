@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.VisitViewController" spacing="10">
+
+    <TableView fx:id="visitTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="index" text="ID" />
+            <TableColumn fx:id="patient" text="Patient" />
+            <TableColumn fx:id="doctor" text="Doctor" />
+            <TableColumn fx:id="complaints" text="Complaints" />
+	    <TableColumn fx:id="dateVisit" text="Date Visit" />
+	    <TableColumn fx:id="dateDischarge" text="Date Discharge" />
+	    <TableColumn fx:id="dateClose" text="Date Close" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Add Visit" fx:id="addVisitButton" onAction="#addVisit"/>
+        <Button text="Edit Visit" fx:id="editVisitButton" onAction="#editVisit"/>
+        <Button text="Delete Visit" fx:id="deleteVisitButton" onAction="#deleteVisit"/>
+    </HBox>
+
+</VBox>

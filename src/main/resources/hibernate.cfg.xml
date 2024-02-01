@@ -27,5 +27,6 @@
         <mapping class="com.lab2.entities.Test"/>
         <mapping class="com.lab2.entities.TestResult"/>
         <mapping class="com.lab2.entities.Diagnosis"/>
+	<mapping class="com.lab2.entities.Weekday"/>
     </session-factory>
 </hibernate-configuration>

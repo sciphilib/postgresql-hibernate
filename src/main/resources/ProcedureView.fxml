@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.ProcedureViewController" spacing="10">
+
+    <TableView fx:id="procedureTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="index" text="ID" />
+            <TableColumn fx:id="name" text="Procedure" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Add Procedure" fx:id="addProcedureButton" onAction="#addProcedure"/>
+        <Button text="Edit Procedure" fx:id="editProcedureButton" onAction="#editProcedure"/>
+        <Button text="Delete Procedure" fx:id="deleteProcedureButton" onAction="#deleteProcedure"/>
+    </HBox>
+
+</VBox>

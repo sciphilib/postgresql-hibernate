@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.TestResultViewController" spacing="10">
+
+    <TableView fx:id="testResultTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="index" text="ID" />
+	    <TableColumn fx:id="visitPatient" text="Patient" />
+	    <TableColumn fx:id="visitDoctor" text="Doctor" />
+	    <TableColumn fx:id="testName" text="Test Name" />
+	    <TableColumn fx:id="testResult" text="Test Result" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Add TestResult" fx:id="addTestResultButton" onAction="#addTestResult"/>
+        <Button text="Edit TestResult" fx:id="editTestResultButton" onAction="#editTestResult"/>
+        <Button text="Delete TestResult" fx:id="deleteTestResultButton" onAction="#deleteTestResult"/>
+    </HBox>
+
+</VBox>

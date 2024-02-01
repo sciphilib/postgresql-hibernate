@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.MedicationViewController" spacing="10">
+
+    <TableView fx:id="medicationTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="index" text="ID" />
+            <TableColumn fx:id="name" text="Medication" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Button text="Add Medication" fx:id="addMedicationButton" onAction="#addMedication"/>
+        <Button text="Edit Medication" fx:id="editMedicationButton" onAction="#editMedication"/>
+        <Button text="Delete Medication" fx:id="deleteMedicationButton" onAction="#deleteMedication"/>
+    </HBox>
+
+</VBox>
