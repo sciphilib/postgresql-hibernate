@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.lab2.dao.*;
@@ -16,9 +17,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class DiagnosisViewController {
@@ -181,6 +184,41 @@ public class DiagnosisViewController {
 
     @FXML
     private void deleteDiagnosis() {
-
+		Diagnosis selectedDiagnosis = diagnosisTable.getSelectionModel().getSelectedItem();
+		if (selectedDiagnosis != null) {
+			if (isConfirmed()) {
+				diagnosisDao.delete(selectedDiagnosis);
+				diagnosisTable.getItems().remove(selectedDiagnosis);
+			} else {
+				error();
+			}
+		} else {
+			notChosen();
+		}
     }
+
+	private boolean isConfirmed() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Deletion confirmation");
+		alert.setHeaderText("Diagnosis deleting");
+		alert.setContentText("Are you sure to delete chosen diagnosis?");
+		final Optional<ButtonType> result = alert.showAndWait();
+		return result.get() == ButtonType.OK;
+	}
+
+	private void error() {
+		Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+		errorAlert.setTitle("Deletion error");
+		errorAlert.setHeaderText("An error while diagnosis deleting");
+		errorAlert.setContentText("Failed to delete the selected diagnosis.");
+		errorAlert.showAndWait();
+	}
+
+	private void notChosen() {
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setTitle("Nothing was chosen");
+		alert.setHeaderText("Entity was not chosen");
+		alert.setContentText("Please chose entity you want to delete");
+		alert.showAndWait();
+	}
 }

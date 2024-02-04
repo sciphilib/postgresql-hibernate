@@ -2,6 +2,8 @@ package com.lab2.controller;
 
 import java.io.IOException;
 
+import java.util.Optional;
+
 import com.lab2.dao.SpecializationDao;
 import com.lab2.entities.Specialization;
 import com.lab2.controller.AddSpecializationViewController;
@@ -12,9 +14,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class SpecializationViewController {
@@ -84,6 +88,41 @@ public class SpecializationViewController {
 
     @FXML
     private void deleteSpecialization() {
+		Specialization selectedSpecialization = specializationTable.getSelectionModel().getSelectedItem();
+		if (selectedSpecialization != null) {
+			if (isConfirmed()) {
+				specializationDao.delete(selectedSpecialization);
+				specializationTable.getItems().remove(selectedSpecialization);
+			} else {
+				error();
+			}
+		} else {
+			notChosen();
+		}
+	}
+	
+	private boolean isConfirmed() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Deletion confirmation");
+		alert.setHeaderText("Specialization deleting");
+		alert.setContentText("Are you sure to delete chosen specialization?");
+		final Optional<ButtonType> result = alert.showAndWait();
+		return result.get() == ButtonType.OK;
+	}
 
-    }
+	private void error() {
+		Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+		errorAlert.setTitle("Deletion error");
+		errorAlert.setHeaderText("An error while specialization deleting");
+		errorAlert.setContentText("Failed to delete the selected specialization.");
+		errorAlert.showAndWait();
+	}
+
+	private void notChosen() {
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setTitle("Nothing was chosen");
+		alert.setHeaderText("Entity was not chosen");
+		alert.setContentText("Please chose entity you want to delete");
+		alert.showAndWait();
+	}
 }

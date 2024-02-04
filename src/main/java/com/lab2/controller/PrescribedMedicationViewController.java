@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import com.lab2.controller.AddPrescribedMedicationViewController;
 
@@ -16,9 +17,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class PrescribedMedicationViewController {
@@ -201,6 +204,42 @@ public class PrescribedMedicationViewController {
 
     @FXML
     private void deletePrescribedMedication() {
+		PrescribedMedication selectedPrescribedMedication =
+			prescribedMedicationTable.getSelectionModel().getSelectedItem();
+		if (selectedPrescribedMedication != null) {
+			if (isConfirmed()) {
+				prescribedMedicationDao.delete(selectedPrescribedMedication);
+				prescribedMedicationTable.getItems().remove(selectedPrescribedMedication);
+			} else {
+				error();
+			}
+		} else {
+			notChosen();
+		}
+	}
+	
+	private boolean isConfirmed() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Deletion confirmation");
+		alert.setHeaderText("Prescribed medication deleting");
+		alert.setContentText("Are you sure to delete chosen prescribed medication?");
+		final Optional<ButtonType> result = alert.showAndWait();
+		return result.get() == ButtonType.OK;
+	}
 
-    }
+	private void error() {
+		Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+		errorAlert.setTitle("Deletion error");
+		errorAlert.setHeaderText("An error while prescribed medication deleting");
+		errorAlert.setContentText("Failed to delete the selected prescribed medication.");
+		errorAlert.showAndWait();
+	}
+
+	private void notChosen() {
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setTitle("Nothing was chosen");
+		alert.setHeaderText("Entity was not chosen");
+		alert.setContentText("Please chose entity you want to delete");
+		alert.showAndWait();
+	}
 }

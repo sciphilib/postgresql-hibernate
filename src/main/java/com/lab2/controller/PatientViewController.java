@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.lab2.dao.*;
@@ -19,6 +20,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class PatientViewController {
@@ -106,6 +109,41 @@ public class PatientViewController {
 
     @FXML
     private void deletePatient() {
-
+		Patient selectedPatient = patientTable.getSelectionModel().getSelectedItem();
+		if (selectedPatient != null) {
+			if (isConfirmed()) {
+				patientDao.delete(selectedPatient);
+				patientTable.getItems().remove(selectedPatient);
+			} else {
+				error();
+			}
+		} else {
+			notChosen();
+		}
     }
+
+	private boolean isConfirmed() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Deletion confirmation");
+		alert.setHeaderText("Patient deleting");
+		alert.setContentText("Are you sure to delete chosen patient?");
+		final Optional<ButtonType> result = alert.showAndWait();
+		return result.get() == ButtonType.OK;
+	}
+
+	private void error() {
+		Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+		errorAlert.setTitle("Deletion error");
+		errorAlert.setHeaderText("An error while patient deleting");
+		errorAlert.setContentText("Failed to delete the selected patient.");
+		errorAlert.showAndWait();
+	}
+
+	private void notChosen() {
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setTitle("Nothing was chosen");
+		alert.setHeaderText("Entity was not chosen");
+		alert.setContentText("Please chose entity you want to delete");
+		alert.showAndWait();
+	}
 }
