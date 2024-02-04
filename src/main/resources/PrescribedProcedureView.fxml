@@ -11,6 +11,7 @@
 	    <TableColumn fx:id="visitPatient" text="Patient" />
 	    <TableColumn fx:id="visitDoctor" text="Doctor" />
 	    <TableColumn fx:id="procedure" text="Procedure" />
+	    <TableColumn fx:id="count" text="Count" />
         </columns>
     </TableView>
 

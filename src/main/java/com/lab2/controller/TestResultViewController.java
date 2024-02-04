@@ -1,14 +1,21 @@
 package com.lab2.controller;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import com.lab2.controller.AddTestResultViewController;
 
 import com.lab2.dao.*;
 import com.lab2.entities.*;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -168,13 +175,28 @@ public class TestResultViewController {
     private void loadTestResults() {
         testResultDao = new TestResultDao();
         testResultTable.setItems(FXCollections.
-										   observableArrayList(testResultDao.
-															   findAll()));
+								 observableArrayList(testResultDao.findAll()));
     }
 
     @FXML
     private void addTestResult() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddTestResultView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Add New Test Result");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
 
+			AddTestResultViewController addTestResultViewController = loader.getController();
+			TestResult newTestResult = addTestResultViewController.getNewlyAddedTestResult();
+			if (newTestResult != null) {
+				testResultTable.getItems().add(newTestResult);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML

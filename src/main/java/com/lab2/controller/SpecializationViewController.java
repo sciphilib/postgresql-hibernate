@@ -1,10 +1,17 @@
 package com.lab2.controller;
 
+import java.io.IOException;
+
 import com.lab2.dao.SpecializationDao;
 import com.lab2.entities.Specialization;
+import com.lab2.controller.AddSpecializationViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -52,7 +59,22 @@ public class SpecializationViewController {
 
     @FXML
     private void addSpecialization() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddSpecializationView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Add New Specialization");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
 
+			AddSpecializationViewController addSpecializationViewController = loader.getController();
+			Specialization newSpecialization = addSpecializationViewController.getNewlyAddedSpecialization();
+			if (newSpecialization != null) {
+				specializationTable.getItems().add(newSpecialization);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML

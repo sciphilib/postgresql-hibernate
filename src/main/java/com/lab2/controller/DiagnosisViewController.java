@@ -1,14 +1,21 @@
 package com.lab2.controller;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.lab2.dao.*;
 import com.lab2.entities.*;
+import com.lab2.controller.AddDiagnosisViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -148,7 +155,23 @@ public class DiagnosisViewController {
 
     @FXML
     private void addDiagnosis() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddDiagnosisView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Add New Diagnosis");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
 
+			AddDiagnosisViewController addDiagnosisViewController = loader.getController();
+			Diagnosis newDiagnosis = addDiagnosisViewController.getNewlyAddedDiagnosis();
+			if (newDiagnosis != null) {
+				diagnosisTable.getItems().add(newDiagnosis);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML

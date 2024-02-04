@@ -1,14 +1,21 @@
 package com.lab2.controller;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import com.lab2.controller.AddPrescribedMedicationViewController;
 
 import com.lab2.dao.*;
 import com.lab2.entities.*;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -162,13 +169,29 @@ public class PrescribedMedicationViewController {
     private void loadPrescribedMedications() {
         prescribedMedicationDao = new PrescribedMedicationDao();
         prescribedMedicationTable.setItems(FXCollections.
-										   observableArrayList(prescribedMedicationDao.
-															   findAll()));
+										   observableArrayList(prescribedMedicationDao.findAll()));
     }
 
     @FXML
     private void addPrescribedMedication() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddPrescribedMedicationView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Add New PrescribedMedication");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
 
+			AddPrescribedMedicationViewController addPrescribedMedicationViewController = 
+				loader.getController();
+			PrescribedMedication newPrescribedMedication = 
+				addPrescribedMedicationViewController.getNewlyAddedPrescribedMedication();
+			if (newPrescribedMedication != null) {
+				prescribedMedicationTable.getItems().add(newPrescribedMedication);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML

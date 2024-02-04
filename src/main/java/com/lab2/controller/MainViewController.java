@@ -22,8 +22,8 @@ public class MainViewController {
         entitySelector.setItems(
                 FXCollections.observableArrayList("Doctors", "Specializations",
 												  "Medications", "Procedures", 
-												  "Tests", "Patients", "Visits",
-												  "Appointments", "Diagnosis",
+												  "Diagnosis", "Patients", "Visits",
+												  "Appointments", "Tests",
 												  "Test Results", "Prescribed Procedures",
 												  "Prescribed Medications"));
         entitySelector.setOnAction(event -> switchEntityView(entitySelector.getValue(), stage));

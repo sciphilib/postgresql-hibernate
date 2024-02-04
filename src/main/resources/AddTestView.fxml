@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.AddTestViewController" spacing="10">
+  <TextField fx:id="testField" promptText="Test name"/>
+  <Button text="Add Test" onAction="#handleAddTest"/>
+</VBox>

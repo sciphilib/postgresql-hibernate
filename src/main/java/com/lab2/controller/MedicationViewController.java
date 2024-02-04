@@ -1,10 +1,17 @@
 package com.lab2.controller;
 
+import java.io.IOException;
+
 import com.lab2.dao.MedicationDao;
 import com.lab2.entities.Medication;
+import com.lab2.controller.AddMedicationViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -55,7 +62,23 @@ public class MedicationViewController {
 
     @FXML
     private void addMedication() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddMedicationView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Add New Medication");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
 
+			AddMedicationViewController addMedicationViewController = loader.getController();
+			Medication newMedication = addMedicationViewController.getNewlyAddedMedication();
+			if (newMedication != null) {
+				medicationTable.getItems().add(newMedication);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML

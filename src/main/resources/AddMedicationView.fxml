@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.AddMedicationViewController" spacing="10">
+  <TextField fx:id="medicationField" promptText="Medication name"/>
+  <Button text="Add Medication" onAction="#handleAddMedication"/>
+</VBox>

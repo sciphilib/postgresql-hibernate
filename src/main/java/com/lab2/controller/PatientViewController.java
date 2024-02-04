@@ -1,14 +1,21 @@
 package com.lab2.controller;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.lab2.dao.*;
 import com.lab2.entities.*;
+import com.lab2.controller.AddPatientViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,6 +41,7 @@ public class PatientViewController {
     private TableColumn<Patient, String> address;
 
 	private PatientDao patientDao;
+
 
     public void showPatientTable() {
         initialize();
@@ -72,7 +80,23 @@ public class PatientViewController {
 
     @FXML
     private void addPatient() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddPatientView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Add New Patient");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
 
+			AddPatientViewController addPatientViewController = loader.getController();
+			Patient newPatient = addPatientViewController.getNewlyAddedPatient();
+			if (newPatient != null) {
+				patientTable.getItems().add(newPatient);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML

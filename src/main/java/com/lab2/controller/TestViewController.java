@@ -1,10 +1,17 @@
 package com.lab2.controller;
 
+import java.io.IOException;
+
 import com.lab2.dao.TestDao;
 import com.lab2.entities.Test;
+import com.lab2.controller.AddTestViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -52,7 +59,23 @@ public class TestViewController {
 
     @FXML
     private void addTest() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddTestView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Add New Test");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
 
+			AddTestViewController addTestViewController = loader.getController();
+			Test newTest = addTestViewController.getNewlyAddedTest();
+			if (newTest != null) {
+				testTable.getItems().add(newTest);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML

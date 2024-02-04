@@ -1,5 +1,7 @@
 package com.lab2.controller;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -8,9 +10,14 @@ import com.lab2.dao.DoctorDao;
 import com.lab2.dao.SpecializationDao;
 import com.lab2.entities.Doctor;
 import com.lab2.entities.Specialization;
+import com.lab2.controller.AddDoctorViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -101,7 +108,23 @@ public class DoctorViewController {
 
     @FXML
     private void addDoctor() {
+		try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddDoctorView.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.setTitle("Add New Doctor");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
 
+		AddDoctorViewController addDoctorViewController = loader.getController();
+		Doctor newDoctor = addDoctorViewController.getNewlyAddedDoctor();
+        if (newDoctor != null) {
+            doctorTable.getItems().add(newDoctor);
+        }
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML

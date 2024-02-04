@@ -1,5 +1,7 @@
 package com.lab2.controller;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -8,9 +10,14 @@ import java.time.format.DateTimeFormatter;
 
 import com.lab2.dao.*;
 import com.lab2.entities.*;
+import com.lab2.controller.AddAppointmentViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -159,7 +166,23 @@ public class AppointmentViewController {
 
     @FXML
     private void addAppointment() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddAppointmentView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Add New Appointment");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
 
+			AddAppointmentViewController addAppointmentViewController = loader.getController();
+			Appointment newAppointment = addAppointmentViewController.getNewlyAddedAppointment();
+			if (newAppointment != null) {
+				appointmentTable.getItems().add(newAppointment);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML

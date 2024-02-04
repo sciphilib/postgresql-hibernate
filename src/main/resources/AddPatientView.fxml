@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.AddPatientViewController" spacing="10">
+  <TextField fx:id="lastNameField" promptText="Last Name"/>
+  <TextField fx:id="firstNameField" promptText="First Name"/>
+  <TextField fx:id="middleNameField" promptText="Middle Name"/>
+  <TextField fx:id="cityNameField" promptText="City"/>
+  <TextField fx:id="streetNameField" promptText="Street"/>
+  <TextField fx:id="buildingNameField" promptText="Building"/>
+  <TextField fx:id="flatNameField" promptText="Flat"/>
+  <Button text="Add Patient" onAction="#handleAddPatient"/>
+</VBox>

@@ -1,14 +1,21 @@
 package com.lab2.controller;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import com.lab2.controller.AddPrescribedProcedureViewController;
 
 import com.lab2.dao.*;
 import com.lab2.entities.*;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -30,6 +37,9 @@ public class PrescribedProcedureViewController {
 	@FXML
     private TableColumn<PrescribedProcedure, Integer> procedure;
 
+	@FXML
+    private TableColumn<PrescribedProcedure, Integer> count;
+
 	private VisitDao visitDao;
 	private DoctorDao doctorDao;
 	private PatientDao patientDao;
@@ -44,6 +54,7 @@ public class PrescribedProcedureViewController {
     @FXML
     private void initialize() {
 		procedure.setCellValueFactory(new PropertyValueFactory<>("idProcedure"));
+		count.setCellValueFactory(new PropertyValueFactory<>("count"));
 
 		visitDao = new VisitDao();
 
@@ -162,13 +173,30 @@ public class PrescribedProcedureViewController {
     private void loadPrescribedProcedures() {
         prescribedProcedureDao = new PrescribedProcedureDao();
         prescribedProcedureTable.setItems(FXCollections.
-										   observableArrayList(prescribedProcedureDao.
-															   findAll()));
+										  observableArrayList(prescribedProcedureDao.
+															  findAll()));
     }
 
     @FXML
     private void addPrescribedProcedure() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddPrescribedProcedureView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Add New PrescribedProcedure");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
 
+			AddPrescribedProcedureViewController addPrescribedProcedureViewController = 
+				loader.getController();
+			PrescribedProcedure newPrescribedProcedure = 
+				addPrescribedProcedureViewController.getNewlyAddedPrescribedProcedure();
+			if (newPrescribedProcedure != null) {
+				prescribedProcedureTable.getItems().add(newPrescribedProcedure);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     @FXML
