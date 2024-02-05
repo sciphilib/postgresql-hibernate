@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import com.lab2.controller.AddPrescribedProcedureViewController;
+import com.lab2.controller.UpdatePrescribedProcedureViewController;
 
 import com.lab2.dao.*;
 import com.lab2.entities.*;
@@ -204,7 +205,34 @@ public class PrescribedProcedureViewController {
 
     @FXML
     private void editPrescribedProcedure() {
+		PrescribedProcedure selectedPrescribedProcedure =
+			prescribedProcedureTable.getSelectionModel().getSelectedItem();
+		if (selectedPrescribedProcedure != null) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().
+												   getResource("/UpdatePrescribedProcedureView.fxml"));
+				Parent root = loader.load();
+				UpdatePrescribedProcedureViewController updatePrescribedProcedureViewController = 
+					loader.getController();
+				updatePrescribedProcedureViewController.setPrescribedProcedure(selectedPrescribedProcedure);
 
+				Stage stage = new Stage();
+				stage.setTitle("Update PrescribedProcedure");
+				stage.setScene(new Scene(root));
+				stage.showAndWait();
+				
+				PrescribedProcedure updatedPrescribedProcedure =
+					updatePrescribedProcedureViewController.getNewlyUpdatedPrescribedProcedure();
+				int selectedIndex = prescribedProcedureTable.getSelectionModel().getSelectedIndex();
+				prescribedProcedureTable.getItems().set(selectedIndex, updatedPrescribedProcedure);
+				prescribedProcedureTable.refresh();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			notChosen();
+		}
     }
 
     @FXML
@@ -244,7 +272,7 @@ public class PrescribedProcedureViewController {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setTitle("Nothing was chosen");
 		alert.setHeaderText("Entity was not chosen");
-		alert.setContentText("Please chose entity you want to delete");
+		alert.setContentText("Please chose entity you want to delete or update");
 		alert.showAndWait();
 	}
 }

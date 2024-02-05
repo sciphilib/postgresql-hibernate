@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.lab2.dao.SpecializationDao;
 import com.lab2.entities.Specialization;
 import com.lab2.controller.AddSpecializationViewController;
+import com.lab2.controller.UpdateSpecializationViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -83,7 +84,32 @@ public class SpecializationViewController {
 
     @FXML
     private void editSpecialization() {
+		Specialization selectedSpecialization = specializationTable.getSelectionModel().getSelectedItem();
+		if (selectedSpecialization != null) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateSpecializationView.fxml"));
+				Parent root = loader.load();
+				UpdateSpecializationViewController updateSpecializationViewController =
+					loader.getController();
+				updateSpecializationViewController.setSpecialization(selectedSpecialization);
 
+				Stage stage = new Stage();
+				stage.setTitle("Update Specialization");
+				stage.setScene(new Scene(root));
+				stage.showAndWait();
+				
+				Specialization updatedSpecialization =
+					updateSpecializationViewController.getNewlyUpdatedSpecialization();
+				int selectedIndex = specializationTable.getSelectionModel().getSelectedIndex();
+				specializationTable.getItems().set(selectedIndex, updatedSpecialization);
+				specializationTable.refresh();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			notChosen();
+		}
     }
 
     @FXML
@@ -122,7 +148,7 @@ public class SpecializationViewController {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setTitle("Nothing was chosen");
 		alert.setHeaderText("Entity was not chosen");
-		alert.setContentText("Please chose entity you want to delete");
+		alert.setContentText("Please chose entity you want to delete or update");
 		alert.showAndWait();
 	}
 }

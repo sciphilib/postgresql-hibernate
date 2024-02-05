@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import com.lab2.dao.*;
 import com.lab2.entities.*;
 import com.lab2.controller.AddVisitViewController;
+import com.lab2.controller.UpdateVisitViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -196,11 +197,69 @@ public class VisitViewController {
 
     @FXML
     private void editVisit() {
+		Visit selectedVisit = visitTable.getSelectionModel().getSelectedItem();
+		if (selectedVisit != null) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateVisitView.fxml"));
+				Parent root = loader.load();
+				UpdateVisitViewController updateVisitViewController = loader.getController();
+				updateVisitViewController.setVisit(selectedVisit);
 
+				Stage stage = new Stage();
+				stage.setTitle("Update Visit");
+				stage.setScene(new Scene(root));
+				stage.showAndWait();
+				
+				Visit updatedVisit = updateVisitViewController.getNewlyUpdatedVisit();
+				int selectedIndex = visitTable.getSelectionModel().getSelectedIndex();
+				visitTable.getItems().set(selectedIndex, updatedVisit);
+				visitTable.refresh();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			notChosen();
+		}
     }
 
     @FXML
     private void deleteVisit() {
-
+		Visit selectedVisit = visitTable.getSelectionModel().getSelectedItem();
+		if (selectedVisit != null) {
+			if (isConfirmed()) {
+				visitDao.delete(selectedVisit);
+				visitTable.getItems().remove(selectedVisit);
+			} else {
+				error();
+			}
+		} else {
+			notChosen();
+		}
     }
+
+	private boolean isConfirmed() {
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Deletion confirmation");
+		alert.setHeaderText("Patient deleting");
+		alert.setContentText("Are you sure to delete chosen patient?");
+		final Optional<ButtonType> result = alert.showAndWait();
+		return result.get() == ButtonType.OK;
+	}
+
+	private void error() {
+		Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+		errorAlert.setTitle("Deletion error");
+		errorAlert.setHeaderText("An error while patient deleting");
+		errorAlert.setContentText("Failed to delete the selected patient.");
+		errorAlert.showAndWait();
+	}
+
+	private void notChosen() {
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setTitle("Nothing was chosen");
+		alert.setHeaderText("Entity was not chosen");
+		alert.setContentText("Please chose entity you want to delete or update");
+		alert.showAndWait();
+	}
 }

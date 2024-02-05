@@ -15,10 +15,28 @@ import java.time.LocalDateTime;
 
 import java.lang.System;
 
-public class AddVisitViewController {
+public class UpdateVisitViewController {
 
-	public Visit getNewlyAddedVisit() {
+	public Visit getNewlyUpdatedVisit() {
 		return newVisit;
+	}
+
+	public void setVisit(Visit visit) {
+		newVisit = visit;
+		Patient patient = patientDao.findById(visit.getIdPatient());
+		patientComboBox.setValue(patient);
+		Doctor doctor = doctorDao.findById(visit.getIdDoctor());
+		doctorComboBox.setValue(doctor);
+		complaintsField.setText(visit.getComplaints());
+		String[] parsedVisit = (visit.getDateVisit().toString()).split("T");
+		dateVisitField.setText(parsedVisit[0]);
+		timeVisitField.setText(parsedVisit[1]);
+		String[] parsedDischarge = visit.getDateDischarge().toString().split("T");
+		dateDischargeField.setText(parsedDischarge[0]);
+		timeDischargeField.setText(parsedDischarge[1]);
+		String[] parsedClose = visit.getDateClose().toString().split("T");
+		dateCloseField.setText(parsedClose[0]);
+		timeCloseField.setText(parsedClose[1]);
 	}
 
     @FXML
@@ -131,7 +149,7 @@ public class AddVisitViewController {
 	}
 
     @FXML
-    private void handleAddVisit() {
+    private void handleUpdateVisit() {
 		try {			
 			String dateVisit = dateVisitField.getText();
 			String timeVisit = timeVisitField.getText();
@@ -177,13 +195,14 @@ public class AddVisitViewController {
 			String[] parsedCloseTime = timeClose.split(":");
 			Integer closeHours = Integer.parseInt(parsedCloseTime[0]);
 			Integer closeMinutes = Integer.parseInt(parsedCloseTime[1]);
-			newVisit = new Visit(1, patient.getId(), doctor.getId(), complaints,
+			Integer id = newVisit.getId();
+			newVisit = new Visit(id, patient.getId(), doctor.getId(), complaints,
 								 LocalDateTime.of(visitYear, visitMonth, visitDay, visitHours, visitMinutes),
 								 LocalDateTime.of(dischargeYear, dischargeMonth, dischargeDay,
 												  dischargeHours, dischargeMinutes),
 								 LocalDateTime.of(closeYear, closeMonth, closeDay, closeHours, closeMinutes));
 
-			visitDao.save(newVisit);
+			visitDao.update(newVisit);
 			closeStage();
 		} catch (Exception e) {
 			showErrorAlert(e.getMessage());

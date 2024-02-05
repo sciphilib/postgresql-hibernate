@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.lab2.dao.ProcedureDao;
 import com.lab2.entities.Procedure;
 import com.lab2.controller.AddProcedureViewController;
+import com.lab2.controller.UpdateProcedureViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -84,7 +85,30 @@ public class ProcedureViewController {
 
     @FXML
     private void editProcedure() {
+		Procedure selectedProcedure = procedureTable.getSelectionModel().getSelectedItem();
+		if (selectedProcedure != null) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateProcedureView.fxml"));
+				Parent root = loader.load();
+				UpdateProcedureViewController updateProcedureViewController = loader.getController();
+				updateProcedureViewController.setProcedure(selectedProcedure);
 
+				Stage stage = new Stage();
+				stage.setTitle("Update Procedure");
+				stage.setScene(new Scene(root));
+				stage.showAndWait();
+				
+				Procedure updatedProcedure = updateProcedureViewController.getNewlyUpdatedProcedure();
+				int selectedIndex = procedureTable.getSelectionModel().getSelectedIndex();
+				procedureTable.getItems().set(selectedIndex, updatedProcedure);
+				procedureTable.refresh();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			notChosen();
+		}
     }
 
     @FXML
@@ -123,7 +147,7 @@ public class ProcedureViewController {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setTitle("Nothing was chosen");
 		alert.setHeaderText("Entity was not chosen");
-		alert.setContentText("Please chose entity you want to delete");
+		alert.setContentText("Please chose entity you want to delete or update");
 		alert.showAndWait();
 	}
 }

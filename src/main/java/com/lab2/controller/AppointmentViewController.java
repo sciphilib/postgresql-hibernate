@@ -190,7 +190,31 @@ public class AppointmentViewController {
 
     @FXML
     private void editAppointment() {
+		Appointment selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
+		if (selectedAppointment != null) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateAppointmentView.fxml"));
+				Parent root = loader.load();
+				UpdateAppointmentViewController updateAppointmentViewController = loader.getController();
+				updateAppointmentViewController.setAppointment(selectedAppointment);
 
+				Stage stage = new Stage();
+				stage.setTitle("Update Appointment");
+				stage.setScene(new Scene(root));
+				stage.showAndWait();
+				
+				Appointment updatedAppointment =
+					updateAppointmentViewController.getNewlyUpdatedAppointment();
+				int selectedIndex = appointmentTable.getSelectionModel().getSelectedIndex();
+				appointmentTable.getItems().set(selectedIndex, updatedAppointment);
+				appointmentTable.refresh();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			notChosen();
+		}
     }
 
     @FXML
@@ -229,7 +253,7 @@ public class AppointmentViewController {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setTitle("Nothing was chosen");
 		alert.setHeaderText("Entity was not chosen");
-		alert.setContentText("Please chose entity you want to delete");
+		alert.setContentText("Please chose entity you want to delete or update");
 		alert.showAndWait();
 	}
 }

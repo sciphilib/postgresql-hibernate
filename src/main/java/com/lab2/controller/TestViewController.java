@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.lab2.dao.TestDao;
 import com.lab2.entities.Test;
 import com.lab2.controller.AddTestViewController;
+import com.lab2.controller.UpdateTestViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -84,7 +85,30 @@ public class TestViewController {
 
     @FXML
     private void editTest() {
+		Test selectedTest = testTable.getSelectionModel().getSelectedItem();
+		if (selectedTest != null) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateTestView.fxml"));
+				Parent root = loader.load();
+				UpdateTestViewController updateTestViewController = loader.getController();
+				updateTestViewController.setTest(selectedTest);
 
+				Stage stage = new Stage();
+				stage.setTitle("Update Test");
+				stage.setScene(new Scene(root));
+				stage.showAndWait();
+				
+				Test updatedTest = updateTestViewController.getNewlyUpdatedTest();
+				int selectedIndex = testTable.getSelectionModel().getSelectedIndex();
+				testTable.getItems().set(selectedIndex, updatedTest);
+				testTable.refresh();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			notChosen();
+		}
     }
 
     @FXML
@@ -123,7 +147,7 @@ public class TestViewController {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setTitle("Nothing was chosen");
 		alert.setHeaderText("Entity was not chosen");
-		alert.setContentText("Please chose entity you want to delete");
+		alert.setContentText("Please chose entity you want to delete or update");
 		alert.showAndWait();
 	}
 }

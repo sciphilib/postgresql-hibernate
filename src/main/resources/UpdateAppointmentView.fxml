@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.UpdateAppointmentViewController" spacing="10">
+  <ComboBox fx:id="doctorComboBox" promptText="Select Doctor"/>
+  <ComboBox fx:id="weekdayComboBox" promptText="Select Weekday"/>
+  <TextField fx:id="beginTimeField" promptText="Begin Time"/>
+  <TextField fx:id="endTimeField" promptText="End Time"/>
+  <TextField fx:id="officeField" promptText="Office"/>
+  <TextField fx:id="districtField" promptText="District"/>
+  <Button text="Update Appointment" onAction="#handleUpdateAppointment"/>
+</VBox>

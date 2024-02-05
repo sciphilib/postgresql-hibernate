@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.UpdateSpecializationViewController" spacing="10">
+  <TextField fx:id="specializationField" promptText="Specialization name"/>
+  <Button text="Update Specialization" onAction="#handleUpdateSpecialization"/>
+</VBox>

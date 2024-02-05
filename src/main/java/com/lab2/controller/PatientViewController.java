@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.lab2.dao.*;
 import com.lab2.entities.*;
 import com.lab2.controller.AddPatientViewController;
+import com.lab2.controller.UpdatePatientViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -104,7 +105,30 @@ public class PatientViewController {
 
     @FXML
     private void editPatient() {
+		Patient selectedPatient = patientTable.getSelectionModel().getSelectedItem();
+		if (selectedPatient != null) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdatePatientView.fxml"));
+				Parent root = loader.load();
+				UpdatePatientViewController updatePatientViewController = loader.getController();
+				updatePatientViewController.setPatient(selectedPatient);
 
+				Stage stage = new Stage();
+				stage.setTitle("Update Patient");
+				stage.setScene(new Scene(root));
+				stage.showAndWait();
+				
+				Patient updatedPatient = updatePatientViewController.getNewlyUpdatedPatient();
+				int selectedIndex = patientTable.getSelectionModel().getSelectedIndex();
+				patientTable.getItems().set(selectedIndex, updatedPatient);
+				patientTable.refresh();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			notChosen();
+		}
     }
 
     @FXML
@@ -143,7 +167,7 @@ public class PatientViewController {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setTitle("Nothing was chosen");
 		alert.setHeaderText("Entity was not chosen");
-		alert.setContentText("Please chose entity you want to delete");
+		alert.setContentText("Please chose entity you want to delete or update");
 		alert.showAndWait();
 	}
 }

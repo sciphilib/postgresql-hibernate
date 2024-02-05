@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import com.lab2.controller.AddTestResultViewController;
+import com.lab2.controller.UpdateTestResultViewController;
 
 import com.lab2.dao.*;
 import com.lab2.entities.*;
@@ -205,7 +206,30 @@ public class TestResultViewController {
 
     @FXML
     private void editTestResult() {
+		TestResult selectedTestResult = testResultTable.getSelectionModel().getSelectedItem();
+		if (selectedTestResult != null) {
+			try {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateTestResultView.fxml"));
+				Parent root = loader.load();
+				UpdateTestResultViewController updateTestResultViewController = loader.getController();
+				updateTestResultViewController.setTestResult(selectedTestResult);
 
+				Stage stage = new Stage();
+				stage.setTitle("Update TestResult");
+				stage.setScene(new Scene(root));
+				stage.showAndWait();
+				
+				TestResult updatedTestResult = updateTestResultViewController.getNewlyUpdatedTestResult();
+				int selectedIndex = testResultTable.getSelectionModel().getSelectedIndex();
+				testResultTable.getItems().set(selectedIndex, updatedTestResult);
+				testResultTable.refresh();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			notChosen();
+		}
     }
 
     @FXML
@@ -244,7 +268,7 @@ public class TestResultViewController {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
 		alert.setTitle("Nothing was chosen");
 		alert.setHeaderText("Entity was not chosen");
-		alert.setContentText("Please chose entity you want to delete");
+		alert.setContentText("Please chose entity you want to delete or update");
 		alert.showAndWait();
 	}
 }
