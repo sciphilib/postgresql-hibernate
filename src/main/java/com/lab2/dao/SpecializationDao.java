@@ -5,8 +5,16 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-
 import com.lab2.entities.Specialization;
+import com.lab2.dao.SpecializationDao;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import java.util.ArrayList;
+import java.util.List;
 import com.lab2.util.HibernateUtil;
 
 public class SpecializationDao implements GenericDao<Specialization> {
@@ -67,4 +75,22 @@ public class SpecializationDao implements GenericDao<Specialization> {
             return query.list();
         }
     }
+
+	public List<Specialization> findByExample(Specialization exampleSpecialization) {
+		try (Session session = sessionFactory.openSession()) {
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Specialization> cq = cb.createQuery(Specialization.class);
+			Root<Specialization> root = cq.from(Specialization.class);
+			List<Predicate> predicates = new ArrayList<>();
+
+			if (exampleSpecialization.getName() != null && !exampleSpecialization.getName().isEmpty()) {
+				predicates.add(cb.like(cb.lower(root.get("name")),
+									   "%" + exampleSpecialization.getName().toLowerCase() + "%"));
+			}
+
+			cq.select(root).where(cb.and(predicates.toArray(new Predicate[0])));
+			Query<Specialization> query = session.createQuery(cq);
+			return query.getResultList();
+		}
+	}
 }

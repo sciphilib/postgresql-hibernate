@@ -11,6 +11,7 @@ import com.lab2.dao.*;
 import com.lab2.entities.*;
 import com.lab2.controller.AddDiagnosisViewController;
 import com.lab2.controller.UpdateDiagnosisViewController;
+import com.lab2.controller.FindDiagnosisViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -220,6 +221,35 @@ public class DiagnosisViewController {
 			notChosen();
 		}
     }
+
+	@FXML
+	private void findDiagnosis() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FindDiagnosisView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Find Test Result");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+
+			FindDiagnosisViewController findDiagnosisViewController = loader.getController();
+			List<Diagnosis> foundDiagnosis = findDiagnosisViewController.getNewlyFoundDiagnosis();
+
+			if (foundDiagnosis != null && !foundDiagnosis.isEmpty()) {
+				diagnosisTable.setItems(FXCollections.observableArrayList(foundDiagnosis));
+			} else {
+				diagnosisTable.setItems(FXCollections.observableArrayList());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void refreshDiagnosis() {
+		loadDiagnosis();
+	}
 
 	private boolean isConfirmed() {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

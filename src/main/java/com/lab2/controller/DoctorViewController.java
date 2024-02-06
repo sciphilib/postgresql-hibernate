@@ -13,6 +13,7 @@ import com.lab2.entities.Doctor;
 import com.lab2.entities.Specialization;
 import com.lab2.controller.AddDoctorViewController;
 import com.lab2.controller.UpdateDoctorViewController;
+import com.lab2.controller.FindDoctorViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -172,6 +173,35 @@ public class DoctorViewController {
 		} else {
 			notChosen();
 		}
+	}
+
+	@FXML
+	private void findDoctor() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FindDoctorView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Find Doctor");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+
+			FindDoctorViewController findDoctorViewController = loader.getController();
+			List<Doctor> foundDoctor = findDoctorViewController.getNewlyFoundDoctor();
+
+			if (foundDoctor != null && !foundDoctor.isEmpty()) {
+				doctorTable.setItems(FXCollections.observableArrayList(foundDoctor));
+			} else {
+				doctorTable.setItems(FXCollections.observableArrayList());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void refreshDoctor() {
+		loadDoctors();
 	}
 	
 	private boolean isConfirmed() {

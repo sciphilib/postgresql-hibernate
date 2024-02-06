@@ -16,6 +16,8 @@
         <Button text="Add Procedure" fx:id="addProcedureButton" onAction="#addProcedure"/>
         <Button text="Edit Procedure" fx:id="editProcedureButton" onAction="#editProcedure"/>
         <Button text="Delete Procedure" fx:id="deleteProcedureButton" onAction="#deleteProcedure"/>
+	<Button text="Find Procedure" fx:id="findProcedureButton" onAction="#findProcedure"/>
+	<Button text="Refresh Procedure" fx:id="refreshProcedureButton" onAction="#refreshProcedure"/>
     </HBox>
 
 </VBox>

@@ -3,11 +3,13 @@ package com.lab2.controller;
 import java.io.IOException;
 
 import java.util.Optional;
+import java.util.List;
 
 import com.lab2.dao.TestDao;
 import com.lab2.entities.Test;
 import com.lab2.controller.AddTestViewController;
 import com.lab2.controller.UpdateTestViewController;
+import com.lab2.controller.FindTestViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -124,6 +126,35 @@ public class TestViewController {
 		} else {
 			notChosen();
 		}
+	}
+
+	@FXML
+	private void findTest() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FindTestView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Find Test");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+
+			FindTestViewController findTestViewController = loader.getController();
+			List<Test> foundTest = findTestViewController.getNewlyFoundTest();
+
+			if (foundTest != null && !foundTest.isEmpty()) {
+				testTable.setItems(FXCollections.observableArrayList(foundTest));
+			} else {
+				testTable.setItems(FXCollections.observableArrayList());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void refreshTest() {
+		loadTests();
 	}
 	
 	private boolean isConfirmed() {

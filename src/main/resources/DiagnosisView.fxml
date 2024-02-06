@@ -18,6 +18,8 @@
         <Button text="Add Diagnosis" fx:id="addDiagnosisButton" onAction="#addDiagnosis"/>
         <Button text="Edit Diagnosis" fx:id="editDiagnosisButton" onAction="#editDiagnosis"/>
         <Button text="Delete Diagnosis" fx:id="deleteDiagnosisButton" onAction="#deleteDiagnosis"/>
+	<Button text="Find Diagnosis" fx:id="findDiagnosisButton" onAction="#findDiagnosis"/>
+	<Button text="Refresh Diagnosis" fx:id="refreshDiagnosisButton" onAction="#refreshDiagnosis"/>
     </HBox>
 
 </VBox>

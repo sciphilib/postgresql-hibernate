@@ -13,6 +13,7 @@ import com.lab2.dao.*;
 import com.lab2.entities.*;
 import com.lab2.controller.AddVisitViewController;
 import com.lab2.controller.UpdateVisitViewController;
+import com.lab2.controller.FindVisitViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -237,6 +238,35 @@ public class VisitViewController {
 			notChosen();
 		}
     }
+
+	@FXML
+	private void findVisit() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FindVisitView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Find Visit");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+
+			FindVisitViewController findVisitViewController = loader.getController();
+			List<Visit> foundVisit = findVisitViewController.getNewlyFoundVisit();
+
+			if (foundVisit != null && !foundVisit.isEmpty()) {
+				visitTable.setItems(FXCollections.observableArrayList(foundVisit));
+			} else {
+				visitTable.setItems(FXCollections.observableArrayList());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void refreshVisit() {
+		loadVisits();
+	}
 
 	private boolean isConfirmed() {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

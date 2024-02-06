@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import com.lab2.controller.AddPrescribedProcedureViewController;
 import com.lab2.controller.UpdatePrescribedProcedureViewController;
+import com.lab2.controller.FindPrescribedProcedureViewController;
 
 import com.lab2.dao.*;
 import com.lab2.entities.*;
@@ -249,6 +250,38 @@ public class PrescribedProcedureViewController {
 		} else {
 			notChosen();
 		}
+	}
+
+	@FXML
+	private void findPrescribedProcedure() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FindPrescribedProcedureView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Find PrescribedProcedure");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+
+			FindPrescribedProcedureViewController findPrescribedProcedureViewController =
+				loader.getController();
+			List<PrescribedProcedure> foundPrescribedProcedure =
+				findPrescribedProcedureViewController.getNewlyFoundPrescribedProcedure();
+
+			if (foundPrescribedProcedure != null && !foundPrescribedProcedure.isEmpty()) {
+				prescribedProcedureTable.setItems(FXCollections.
+												  observableArrayList(foundPrescribedProcedure));
+			} else {
+				prescribedProcedureTable.setItems(FXCollections.observableArrayList());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void refreshPrescribedProcedure() {
+		loadPrescribedProcedures();
 	}
 	
 	private boolean isConfirmed() {

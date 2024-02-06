@@ -2,11 +2,13 @@ package com.lab2.controller;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Optional;
 import com.lab2.dao.MedicationDao;
 import com.lab2.entities.Medication;
 import com.lab2.controller.AddMedicationViewController;
 import com.lab2.controller.UpdateMedicationViewController;
+import com.lab2.controller.FindMedicationViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -125,6 +127,30 @@ public class MedicationViewController {
 			}
 		} else {
 			notChosen();
+		}
+	}
+
+	@FXML
+	private void findMedication() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FindMedicationView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Find Medication");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+
+			FindMedicationViewController findMedicationViewController = loader.getController();
+			List<Medication> foundMedication = findMedicationViewController.getNewlyFoundMedication();
+
+			if (foundMedication != null && !foundMedication.isEmpty()) {
+				medicationTable.setItems(FXCollections.observableArrayList(foundMedication));
+			} else {
+				medicationTable.setItems(FXCollections.observableArrayList());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	

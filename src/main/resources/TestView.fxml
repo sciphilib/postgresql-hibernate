@@ -16,6 +16,8 @@
         <Button text="Add Test" fx:id="addTestButton" onAction="#addTest"/>
         <Button text="Edit Test" fx:id="editTestButton" onAction="#editTest"/>
         <Button text="Delete Test" fx:id="deleteTestButton" onAction="#deleteTest"/>
+	<Button text="Find Test" fx:id="findTestButton" onAction="#findTest"/>
+	<Button text="Refresh Test" fx:id="refreshTestButton" onAction="#refreshTest"/>
     </HBox>
 
 </VBox>

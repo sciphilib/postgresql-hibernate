@@ -19,6 +19,8 @@
         <Button text="Add Doctor" fx:id="addDoctorButton" onAction="#addDoctor"/>
         <Button text="Edit Doctor" fx:id="editDoctorButton" onAction="#editDoctor"/>
         <Button text="Delete Doctor" fx:id="deleteDoctorButton" onAction="#deleteDoctor"/>
+	<Button text="Find Doctor" fx:id="findDoctorButton" onAction="#findDoctor"/>
+	<Button text="Refresh Doctor" fx:id="refreshDoctorButton" onAction="#refreshDoctor"/>
     </HBox>
 
 </VBox>

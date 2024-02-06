@@ -16,6 +16,8 @@
         <Button text="Add Specialization" fx:id="addSpecializationButton" onAction="#addSpecialization"/>
         <Button text="Edit Specialization" fx:id="editSpecializationButton" onAction="#editSpecialization"/>
         <Button text="Delete Specialization" fx:id="deleteSpecializationButton" onAction="#deleteSpecialization"/>
+	<Button text="Find Specialization" fx:id="findSpecializationButton" onAction="#findSpecialization"/>
+	<Button text="Refresh Specialization" fx:id="refreshSpecializationButton" onAction="#refreshSpecialization"/>
     </HBox>
 
 </VBox>

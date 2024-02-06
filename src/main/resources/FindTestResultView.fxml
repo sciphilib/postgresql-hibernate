@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.FindTestResultViewController" spacing="10">
+  <ComboBox fx:id="visitComboBox" promptText="Select Visit"/>
+  <ComboBox fx:id="testComboBox" promptText="Select Test"/>
+  <TextField fx:id="testResultField" promptText="Test Result"/>
+  <Button text="Find Test Result" onAction="#handleFindTestResult"/>
+</VBox>

@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import com.lab2.controller.AddPrescribedMedicationViewController;
 import com.lab2.controller.UpdatePrescribedMedicationViewController;
+import com.lab2.controller.FindPrescribedMedicationViewController;
 
 import com.lab2.dao.*;
 import com.lab2.entities.*;
@@ -245,6 +246,38 @@ public class PrescribedMedicationViewController {
 		} else {
 			notChosen();
 		}
+	}
+
+	@FXML
+	private void findPrescribedMedication() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FindPrescribedMedicationView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Find Prescribed Medication");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+
+			FindPrescribedMedicationViewController findPrescribedMedicationViewController =
+				loader.getController();
+			List<PrescribedMedication> foundPrescribedMedication =
+				findPrescribedMedicationViewController.getNewlyFoundPrescribedMedication();
+
+			if (foundPrescribedMedication != null && !foundPrescribedMedication.isEmpty()) {
+				prescribedMedicationTable.setItems(FXCollections.
+												  observableArrayList(foundPrescribedMedication));
+			} else {
+				prescribedMedicationTable.setItems(FXCollections.observableArrayList());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void refreshPrescribedMedication() {
+		loadPrescribedMedications();
 	}
 	
 	private boolean isConfirmed() {

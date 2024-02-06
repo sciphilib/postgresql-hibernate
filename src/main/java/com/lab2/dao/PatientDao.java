@@ -5,6 +5,12 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.lab2.entities.Patient;
 import com.lab2.util.HibernateUtil;
@@ -67,4 +73,34 @@ public class PatientDao implements GenericDao<Patient> {
             return query.list();
         }
     }
+
+	public List<Patient> findByExample(Patient examplePatient) {
+		try (Session session = sessionFactory.openSession()) {
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Patient> cq = cb.createQuery(Patient.class);
+			Root<Patient> root = cq.from(Patient.class);
+			List<Predicate> predicates = new ArrayList<>();
+
+			if (examplePatient.getLastName() != null && !examplePatient.getLastName().isEmpty()) {
+				predicates.add(cb.like(cb.lower(root.get("lastName")),
+									   "%" + examplePatient.getLastName().toLowerCase() + "%"));
+			}
+			if (examplePatient.getFirstName() != null && !examplePatient.getFirstName().isEmpty()) {
+				predicates.add(cb.like(cb.lower(root.get("firstName")),
+									   "%" + examplePatient.getFirstName().toLowerCase() + "%"));
+			}
+			if (examplePatient.getMiddleName() != null && !examplePatient.getMiddleName().isEmpty()) {
+				predicates.add(cb.like(cb.lower(root.get("middleName")),
+									   "%" + examplePatient.getMiddleName().toLowerCase() + "%"));
+			}
+			if (examplePatient.getAddress() != null && !examplePatient.getAddress().isEmpty()) {
+				predicates.add(cb.like(cb.lower(root.get("address")),
+									   "%" + examplePatient.getAddress().toLowerCase() + "%"));
+			}
+
+			cq.where(cb.and(predicates.toArray(new Predicate[0])));
+			Query<Patient> query = session.createQuery(cq);
+			return query.getResultList();
+		}
+	}
 }

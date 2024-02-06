@@ -3,11 +3,13 @@ package com.lab2.controller;
 import java.io.IOException;
 
 import java.util.Optional;
+import java.util.List;
 
 import com.lab2.dao.SpecializationDao;
 import com.lab2.entities.Specialization;
 import com.lab2.controller.AddSpecializationViewController;
 import com.lab2.controller.UpdateSpecializationViewController;
+import com.lab2.controller.FindSpecializationViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -125,6 +127,36 @@ public class SpecializationViewController {
 		} else {
 			notChosen();
 		}
+	}
+
+	@FXML
+	private void findSpecialization() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FindSpecializationView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Find Specialization");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+
+			FindSpecializationViewController findSpecializationViewController = loader.getController();
+			List<Specialization> foundSpecialization =
+				findSpecializationViewController.getNewlyFoundSpecialization();
+
+			if (foundSpecialization != null && !foundSpecialization.isEmpty()) {
+				specializationTable.setItems(FXCollections.observableArrayList(foundSpecialization));
+			} else {
+				specializationTable.setItems(FXCollections.observableArrayList());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void refreshSpecialization() {
+		loadSpecializations();
 	}
 	
 	private boolean isConfirmed() {

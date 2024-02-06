@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.FindPrescribedProcedureViewController" spacing="10">
+  <ComboBox fx:id="visitComboBox" promptText="Select Visit"/>
+  <ComboBox fx:id="procedureComboBox" promptText="Select Procedure"/>
+  <TextField fx:id="countField" promptText="Count"/>
+  <Button text="Find Prescribed Medication" onAction="#handleFindPrescribedProcedure"/>
+</VBox>

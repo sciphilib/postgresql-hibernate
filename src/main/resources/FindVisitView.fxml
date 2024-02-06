@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.FindVisitViewController" spacing="10">
+  <ComboBox fx:id="patientComboBox" promptText="Select Patient"/>
+  <ComboBox fx:id="doctorComboBox" promptText="Select Doctor"/>
+  <TextField fx:id="complaintsField" promptText="Complaints"/>
+  <TextField fx:id="dateVisitField" promptText="Visit date"/>
+  <TextField fx:id="timeVisitField" promptText="Visit time"/>
+  <TextField fx:id="dateDischargeField" promptText="Discharge date"/>
+  <TextField fx:id="timeDischargeField" promptText="Discharge time"/>
+  <TextField fx:id="dateCloseField" promptText="Close date"/>
+  <TextField fx:id="timeCloseField" promptText="Close time"/>
+  <Button text="Find Visit" onAction="#handleFindVisit"/>
+</VBox>

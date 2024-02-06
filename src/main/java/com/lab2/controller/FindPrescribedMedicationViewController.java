@@ -1,5 +1,7 @@
 package com.lab2.controller;
 
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -12,18 +14,10 @@ import com.lab2.entities.*;
 import com.lab2.util.*;
 import java.util.regex.Pattern;
 
-public class UpdatePrescribedMedicationViewController {
+public class FindPrescribedMedicationViewController {
 
-	public PrescribedMedication getNewlyUpdatedPrescribedMedication() {
-		return newPrescribedMedication;
-	}
-
-	public void setPrescribedMedication(PrescribedMedication prescribedMedication) {
-		newPrescribedMedication = prescribedMedication;
-		Visit visit = visitDao.findById(prescribedMedication.getIdVisit());
-		visitComboBox.setValue(visit);
-		Medication medication = medicationDao.findById(prescribedMedication.getIdMedication());
-		medicationComboBox.setValue(medication);
+	public List<PrescribedMedication> getNewlyFoundPrescribedMedication() {
+		return foundPrescribedMedication;
 	}
 	
 	@FXML
@@ -35,7 +29,7 @@ public class UpdatePrescribedMedicationViewController {
 	private VisitDao visitDao;
 	private MedicationDao medicationDao;
 	private PrescribedMedicationDao prescribedMedicationDao;
-	private PrescribedMedication newPrescribedMedication;
+	private List<PrescribedMedication> foundPrescribedMedication;
 
     @FXML
     private void initialize() {
@@ -57,13 +51,27 @@ public class UpdatePrescribedMedicationViewController {
 	}
 
     @FXML
-    private void handleUpdatePrescribedMedication() {
+    private void handleFindPrescribedMedication() {
 		Visit visit = visitComboBox.getValue();
-		Medication medication = medicationComboBox.getValue();
-		newPrescribedMedication = new PrescribedMedication(newPrescribedMedication.getId(),
-														   visit.getId(), medication.getId());
+		Integer idVisit;
+		if (visit != null) {
+			idVisit = visit.getId();
+		} else {
+			idVisit = null;
+		}
 
-		prescribedMedicationDao.update(newPrescribedMedication);
+		Medication medication = medicationComboBox.getValue();
+		Integer idMedication;
+		if (medication != null) {
+			idMedication = medication.getId();
+		} else {
+			idMedication = null;
+		}
+
+		PrescribedMedication examplePrescribedMedication =
+			new PrescribedMedication(1, idVisit, idMedication);
+		foundPrescribedMedication = prescribedMedicationDao.findByExample(examplePrescribedMedication);
+
 		closeStage();
     }
 

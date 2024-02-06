@@ -18,6 +18,8 @@
         <Button text="Add PrescribedMedication" fx:id="addPrescribedMedicationButton" onAction="#addPrescribedMedication"/>
         <Button text="Edit PrescribedMedication" fx:id="editPrescribedMedicationButton" onAction="#editPrescribedMedication"/>
         <Button text="Delete PrescribedMedication" fx:id="deletePrescribedMedicationButton" onAction="#deletePrescribedMedication"/>
+	<Button text="Find PrescribedMedication" fx:id="findPrescribedMedicationButton" onAction="#findPrescribedMedication"/>
+	<Button text="Refresh PrescribedMedication" fx:id="refreshPrescribedMedicationButton" onAction="#refreshPrescribedMedication"/>
     </HBox>
 
 </VBox>

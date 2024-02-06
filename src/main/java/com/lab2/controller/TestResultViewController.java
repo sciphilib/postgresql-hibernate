@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import com.lab2.controller.AddTestResultViewController;
 import com.lab2.controller.UpdateTestResultViewController;
+import com.lab2.controller.FindTestResultViewController;
 
 import com.lab2.dao.*;
 import com.lab2.entities.*;
@@ -80,7 +81,7 @@ public class TestResultViewController {
                 setText(null);
             } else {
                 TestResult testResult = getTableView().getItems().get(getIndex());
-                Test test = testDao.findById(testResult.getIdVisit());
+                Test test = testDao.findById(testResult.getIdTest());
                 if (test != null) {
 					    setText(test.getName());
                 } else {
@@ -245,6 +246,35 @@ public class TestResultViewController {
 		} else {
 			notChosen();
 		}
+	}
+
+	@FXML
+	private void findTestResult() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FindTestResultView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Find Test Result");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+
+			FindTestResultViewController findTestResultViewController = loader.getController();
+			List<TestResult> foundTestResult = findTestResultViewController.getNewlyFoundTestResult();
+
+			if (foundTestResult != null && !foundTestResult.isEmpty()) {
+				testResultTable.setItems(FXCollections.observableArrayList(foundTestResult));
+			} else {
+				testResultTable.setItems(FXCollections.observableArrayList());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void refreshTestResult() {
+		loadTestResults();
 	}
 	
 	private boolean isConfirmed() {

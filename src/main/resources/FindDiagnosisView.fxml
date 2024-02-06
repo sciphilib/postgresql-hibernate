@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lab2.controller.FindDiagnosisViewController" spacing="10">
+  <ComboBox fx:id="visitComboBox" promptText="Select Visit"/>
+  <TextField fx:id="diagnosisField" promptText="Diagnosis"/>
+  <Button text="Find Diagnosis" onAction="#handleFindDiagnosis"/>
+</VBox>

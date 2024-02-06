@@ -21,6 +21,8 @@
         <Button text="Add Visit" fx:id="addVisitButton" onAction="#addVisit"/>
         <Button text="Edit Visit" fx:id="editVisitButton" onAction="#editVisit"/>
         <Button text="Delete Visit" fx:id="deleteVisitButton" onAction="#deleteVisit"/>
+	<Button text="Find Visit" fx:id="findVisitButton" onAction="#findVisit"/>
+	<Button text="Refresh Visit" fx:id="refreshVisitButton" onAction="#refreshVisit"/>
     </HBox>
 
 </VBox>

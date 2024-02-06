@@ -3,11 +3,13 @@ package com.lab2.controller;
 import java.io.IOException;
 
 import java.util.Optional;
+import java.util.List;
 
 import com.lab2.dao.ProcedureDao;
 import com.lab2.entities.Procedure;
 import com.lab2.controller.AddProcedureViewController;
 import com.lab2.controller.UpdateProcedureViewController;
+import com.lab2.controller.FindProcedureViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -125,6 +127,35 @@ public class ProcedureViewController {
 			notChosen();
 		}
     }
+
+	@FXML
+	private void findProcedure() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FindProcedureView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Find Procedure");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+
+			FindProcedureViewController findProcedureViewController = loader.getController();
+			List<Procedure> foundProcedure = findProcedureViewController.getNewlyFoundProcedure();
+
+			if (foundProcedure != null && !foundProcedure.isEmpty()) {
+				procedureTable.setItems(FXCollections.observableArrayList(foundProcedure));
+			} else {
+				procedureTable.setItems(FXCollections.observableArrayList());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void refreshProcedure() {
+		loadProcedures();
+	}
 
 	private boolean isConfirmed() {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

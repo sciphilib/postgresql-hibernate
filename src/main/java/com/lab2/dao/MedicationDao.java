@@ -5,6 +5,12 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.lab2.entities.Medication;
 import com.lab2.util.HibernateUtil;
@@ -67,4 +73,22 @@ public class MedicationDao implements GenericDao<Medication> {
             return query.list();
         }
     }
+	
+	public List<Medication> findByExample(Medication exampleMedication) {
+		try (Session session = sessionFactory.openSession()) {
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Medication> cq = cb.createQuery(Medication.class);
+			Root<Medication> root = cq.from(Medication.class);
+			List<Predicate> predicates = new ArrayList<>();
+
+			if (exampleMedication.getName() != null && !exampleMedication.getName().isEmpty()) {
+				predicates.add(cb.like(cb.lower(root.get("name")),
+									   "%" + exampleMedication.getName().toLowerCase() + "%"));
+			}
+
+			cq.select(root).where(cb.and(predicates.toArray(new Predicate[0])));
+			Query<Medication> query = session.createQuery(cq);
+			return query.getResultList();
+		}
+	}
 }

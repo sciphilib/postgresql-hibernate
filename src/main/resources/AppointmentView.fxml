@@ -21,6 +21,8 @@
         <Button text="Add Appointment" fx:id="addAppointmentButton" onAction="#addAppointment"/>
         <Button text="Edit Appointment" fx:id="editAppointmentButton" onAction="#editAppointment"/>
         <Button text="Delete Appointment" fx:id="deleteAppointmentButton" onAction="#deleteAppointment"/>
+	<Button text="Find Appointment" fx:id="findAppointmentButton" onAction="#findAppointment"/>
+	<Button text="Refresh Appointment" fx:id="refreshAppointmentButton" onAction="#refreshAppointment"/>
     </HBox>
 
 </VBox>

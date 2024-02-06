@@ -146,6 +146,35 @@ public class PatientViewController {
 		}
     }
 
+	@FXML
+	private void findPatient() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FindPatientView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Find Patient");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+
+			FindPatientViewController findPatientViewController = loader.getController();
+			List<Patient> foundPatient = findPatientViewController.getNewlyFoundPatient();
+
+			if (foundPatient != null && !foundPatient.isEmpty()) {
+				patientTable.setItems(FXCollections.observableArrayList(foundPatient));
+			} else {
+				patientTable.setItems(FXCollections.observableArrayList());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void refreshPatient() {
+		loadPatients();
+	}
+
 	private boolean isConfirmed() {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Deletion confirmation");

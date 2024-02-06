@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import com.lab2.dao.*;
 import com.lab2.entities.*;
 import com.lab2.controller.AddAppointmentViewController;
+import com.lab2.controller.UpdateAppointmentViewController;
+import com.lab2.controller.FindAppointmentViewController;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -231,6 +233,35 @@ public class AppointmentViewController {
 			notChosen();
 		}
     }
+
+	@FXML
+	private void findAppointment() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FindAppointmentView.fxml"));
+			Parent root = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Find Appointment");
+			stage.setScene(new Scene(root));
+			stage.showAndWait();
+
+			FindAppointmentViewController findAppointmentViewController = loader.getController();
+			List<Appointment> foundAppointment = findAppointmentViewController.getNewlyFoundAppointment();
+
+			if (foundAppointment != null && !foundAppointment.isEmpty()) {
+				appointmentTable.setItems(FXCollections.observableArrayList(foundAppointment));
+			} else {
+				appointmentTable.setItems(FXCollections.observableArrayList());
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void refreshAppointment() {
+		loadAppointments();
+	}
 
 	private boolean isConfirmed() {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
